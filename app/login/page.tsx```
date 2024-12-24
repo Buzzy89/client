@@ -1,0 +1,22 @@
+  <div className="login-form">
+    <h1>Login</h1>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input
+        type="email"
+        placeholder="Email"
+        {...register("email")}
+        className="form-control"
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        {...register("password")}
+        className="form-control"
+      />
+      <button type="submit" className="btn btn-primary">
+        Login
+      </button>
+    </form>
+  </div>
+</div>
+</rewritten_file> 

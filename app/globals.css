@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 26, 26, 46;
+  --background-end-rgb: 15, 52, 96;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+    to bottom,
+    rgb(var(--background-start-rgb)),
+    rgb(var(--background-end-rgb))
+  );
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Orbitron', sans-serif;
+  color: theme('colors.neon-blue');
+}
+
+@layer components {
+  .btn {
+    @apply bg-dark-200 text-neon-blue border border-neon-blue px-4 py-2 rounded-md 
+    hover:bg-dark-100 hover:text-neon-purple hover:border-neon-purple 
+    transition-all duration-300 font-display uppercase tracking-wider
+    shadow-neon hover:shadow-neon-purple;
+  }
+
+  .input {
+    @apply w-full p-2 bg-dark-200 border border-neon-blue rounded-md 
+    text-white focus:outline-none focus:ring-2 focus:ring-neon-purple
+    focus:border-neon-purple transition-all duration-300;
+  }
+}
+
