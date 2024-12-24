@@ -7,7 +7,7 @@ import Image from 'next/image'
 import { format, formatDistanceToNow } from 'date-fns'
 import { useAuth } from '@/contexts/AuthContext'
 import { EditPostForm } from '@/components/EditPostForm'
-import type { Post } from '@/utils/api'
+import type { Post, Tag } from '@/utils/api'
 import api from '@/utils/api'
 
 export default function PostDetails() {
@@ -25,7 +25,11 @@ export default function PostDetails() {
       console.log('Fetching post details - ID:', params?.id);
       const fetchedPost = await getPostById(Number(params?.id));
       console.log('Post data received:', fetchedPost);
-      setPost(fetchedPost);
+      const formattedPost = {
+        ...fetchedPost,
+        tags: fetchedPost.tags || []
+      } as Post;
+      setPost(formattedPost);
     } catch (err) {
       console.error('Error fetching post details:', err);
       setError('Failed to load post');
@@ -93,10 +97,6 @@ export default function PostDetails() {
         onCommentSubmit()
       } catch (error) {
         console.error('Failed to submit comment:', error);
-        // Hata 401/403 ise login'e yönlendirmeden önce kullanıcıya bilgi ver
-        if (error.response?.status === 401 || error.response?.status === 403) {
-          alert('Please sign in to comment');
-        }
       } finally {
         setIsSubmitting(false)
       }
@@ -200,11 +200,17 @@ export default function PostDetails() {
   const isOwner = user?.id === post.userId;
   const wasEdited = post.updatedAt && post.createdAt !== post.updatedAt;
 
-  if (isEditing) {
+  if (isEditing && post) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-dark-100 to-dark-300 text-white py-8">
         <div className="container mx-auto px-4 max-w-4xl">
-          <EditPostForm post={post} onSuccess={handleEditSuccess} />
+          <EditPostForm 
+            post={{
+              ...post,
+              tags: post.tags.map(tag => typeof tag === 'string' ? { name: tag } : tag)
+            }} 
+            onSuccess={handleEditSuccess} 
+          />
         </div>
       </div>
     );
@@ -256,19 +262,13 @@ export default function PostDetails() {
         {/* Post Content */}
         <div className="bg-dark-200 rounded-lg shadow-lg overflow-hidden mb-8">
           <div className="relative h-96 w-full">
-            {post.mediaUrl ? (
-              <Image 
-                src={post.mediaUrl} 
-                alt={post.title}
-                fill
-                style={{ objectFit: 'cover' }}
-                className="transition-transform duration-300 hover:scale-105"
-              />
-            ) : (
-              <div className="w-full h-full bg-dark-300 flex items-center justify-center">
-                <span className="text-gray-500">No image</span>
-              </div>
-            )}
+            <Image 
+              src={post.mediaUrl || ''} 
+              alt={post.title}
+              fill
+              unoptimized={true}
+              className="transition-transform duration-300 hover:scale-105"
+            />
           </div>
           <div className="p-6">
             <p className="text-lg mb-4">{post.description}</p>
@@ -292,7 +292,7 @@ export default function PostDetails() {
               <div className="flex flex-wrap gap-2 mb-4">
                 {post.tags.map((tag, index) => (
                   <span key={index} className="bg-neon-purple text-white px-2 py-1 rounded-full text-sm">
-                    {tag.name}
+                    {typeof tag === 'string' ? tag : (tag as Tag).name}
                   </span>
                 ))}
               </div>

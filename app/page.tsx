@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { getHomePosts } from '@/utils/api'
 import PostCard from '@/components/PostCard'
-import type { Post } from '@/utils/api'
+import type { Post } from '@/types'
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([])
@@ -14,7 +14,12 @@ export default function Home() {
     const fetchPosts = async () => {
       try {
         const response = await getHomePosts()
-        setPosts(response.content)
+        const formattedPosts = response.content.map(post => ({
+          ...post,
+          mediaUrl: post.mediaUrl || undefined,
+          tags: post.tags?.map(tag => typeof tag === 'string' ? { name: tag } : tag) || []
+        })) as Post[]
+        setPosts(formattedPosts)
       } catch (err) {
         console.error('Error fetching posts:', err)
         setError('Failed to load posts')

@@ -19,7 +19,7 @@ type ApiTag = {
 
 export const EditPostForm: React.FC<EditPostFormProps> = ({ post, onSuccess }) => {
   const { user } = useAuth();
-  const [preview, setPreview] = useState<string | null>(post.mediaUrl);
+  const [preview, setPreview] = useState<string | null>(post.mediaUrl || null);
   const [formData, setFormData] = useState<PostFormData>({
     title: post.title,
     description: post.description,
@@ -32,17 +32,11 @@ export const EditPostForm: React.FC<EditPostFormProps> = ({ post, onSuccess }) =
     height: post.height,
     width: post.width,
     depth: post.depth,
-    tags: post.tags,
+    tags: post.tags.map(tag => typeof tag === 'string' ? { name: tag } : tag) as Tag[],
     userId: user?.id || 0,
   });
 
-  const convertToClientTags = (tags: ApiTag[]): Tag[] => {
-    return tags.map(tag => ({
-      id: tag.id?.toString() || tag.name,
-      name: tag.name
-    }));
-  };
-
+ 
   const convertToApiTags = (tags: Tag[]): ApiTag[] => {
     return tags.map(tag => ({
       id: typeof tag.id === 'string' ? undefined : tag.id as number,

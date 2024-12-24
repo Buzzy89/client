@@ -5,7 +5,7 @@ export interface WikiDataLabel {
 }
 
 export interface Tag {
-  id?: string | number;
+  id?: number | string;
   name: string;
 }
 
@@ -20,9 +20,10 @@ export interface Post {
   id: number;
   title: string;
   description: string;
+  mediaUrl: string | null | undefined;
   userId: number;
   user: User;
-  mediaUrl: string | null;
+  tags: (Tag | string)[];
   shapes: string[];
   colors: string[];
   materials: string[];
@@ -31,7 +32,6 @@ export interface Post {
   height: number;
   width: number;
   depth: number;
-  tags: Tag[];
   createdAt: string;
   updatedAt: string;
   comments: Comment[];

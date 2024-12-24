@@ -2,18 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { formatDistanceToNow } from 'date-fns';
-
-interface Post {
-  id: number;
-  title: string;
-  description: string;
-  mediaUrl?: string;
-  createdAt: string;
-  user: {
-    id: number;
-    username: string;
-  };
-}
+import { Post } from '@/types';
 
 export default function PostCard({ post }: { post: Post }) {
   return (
@@ -21,9 +10,10 @@ export default function PostCard({ post }: { post: Post }) {
       {post.mediaUrl && (
         <div className="relative aspect-square">
           <Image
-            src={post.mediaUrl}
+            src={post.mediaUrl || ''}
             alt={post.title}
             fill
+            unoptimized={true}
             className="object-cover"
           />
         </div>

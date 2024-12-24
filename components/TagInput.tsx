@@ -10,11 +10,10 @@ interface TagInputProps {
 export const TagInput: React.FC<TagInputProps> = ({ tags, onTagsChange }) => {
   const [inputValue, setInputValue] = useState('');
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && inputValue.trim()) {
-      e.preventDefault();
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (inputValue.trim()) {
       const newTag: Tag = {
-        id: inputValue.trim(),
         name: inputValue.trim()
       };
       onTagsChange([...tags, newTag]);
@@ -33,7 +32,7 @@ export const TagInput: React.FC<TagInputProps> = ({ tags, onTagsChange }) => {
         label="Add Tags"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        onKeyPress={handleKeyPress}
+        onKeyPress={handleSubmit}
         placeholder="Press Enter to add tag"
         margin="normal"
         sx={{

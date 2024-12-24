@@ -146,11 +146,7 @@ export const getPostById = async (id: number): Promise<Post> => {
     });
     return response.data;
   } catch (err) {
-    console.error('Error fetching post:', {
-      error: err,
-      config: err.config,
-      response: err.response
-    });
+    console.error('Error fetching post:', err);
     throw err;
   }
 }
