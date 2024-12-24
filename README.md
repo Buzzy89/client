@@ -1,36 +1,154 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mystical Object Emporium
 
-## Getting Started
+A modern social platform built with Next.js that enables users to share and catalog mystical and unique objects with detailed specifications, materials, and properties. Mystical Object Emporium serves as a comprehensive database and social space for collectors and enthusiasts to document, discuss, and discover extraordinary items with precise physical attributes and semantic classifications.
 
-First, run the development server:
+## 🌟 Features
 
+### 📱 Core Features
+- **Post Creation & Management**
+  - Share objects with detailed specifications
+  - Upload media attachments
+  - Add physical properties (dimensions, weight)
+  - Tag materials, colors, and shapes
+  - Integrate WikiData labels for semantic categorization
+  - Custom tagging system
+
+- **Social Interaction**
+  - Nested commenting system
+  - Like/unlike posts
+  - User profiles
+  - Activity tracking
+
+- **Search & Discovery**
+  - Advanced search functionality
+  - Paginated post listings
+  - Personalized home feed
+
+### 🔒 User System
+- Secure authentication
+- Profile customization
+- Avatar management
+- Activity history tracking
+
+## 🛠️ Technical Stack
+
+- **Frontend Framework**: Next.js 14
+- **Language**: TypeScript
+- **Styling**: 
+  - Tailwind CSS
+  - PostCSS
+- **State Management**: React Context
+- **API Communication**: Axios
+- **Data Validation**: TypeScript interfaces
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18.x or higher
+- npm/yarn/pnpm
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone [repository-url]
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Create a `.env.local` file:
+```env
+NEXT_PUBLIC_API_URL=your_api_url
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Start the development server:
+```bash
+npm run dev
+```
 
-## Learn More
+Visit `http://localhost:3000` to see the application.
 
-To learn more about Next.js, take a look at the following resources:
+## 📁 Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+├── app/                  # App router pages
+├── components/          # Reusable components
+│   ├── TagInput.tsx
+│   ├── WikiDataSearch.tsx
+│   └── WikiTagDropdown.tsx
+├── contexts/           # React contexts
+│   └── AuthContext.tsx
+├── hooks/              # Custom React hooks
+│   └── useDebounce.ts
+├── utils/              # Utility functions
+│   └── api.ts
+└── public/            # Static assets
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔌 API Integration
 
-## Deploy on Vercel
+### Public Endpoints
+- Authentication (login/register)
+- Post retrieval
+- Search functionality
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Protected Endpoints
+- Post management
+- Comment system
+- Profile updates
+- User interactions
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎨 Components
+
+### TagInput
+- Custom tag input component
+- Supports adding/removing tags
+- Auto-completion support
+
+### WikiDataSearch
+- Integration with WikiData API
+- Semantic label search
+- Auto-suggestions
+
+### WikiTagDropdown
+- Dropdown component for WikiData labels
+- Search and select functionality
+
+## 🔧 Configuration Files
+
+- `next.config.js` - Next.js configuration
+- `tailwind.config.js` - Tailwind CSS configuration
+- `postcss.config.js` - PostCSS configuration
+- `tsconfig.json` - TypeScript configuration
+
+## 🚀 Deployment
+
+This project can be deployed on Vercel with zero configuration:
+
+1. Push your code to a Git repository
+2. Import your project to Vercel
+3. Configure environment variables
+4. Deploy
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 📞 Support
+
+For support, email [osmanyusufyildirim@gmail.com] or open an issue in the repository.
+
+---
+
+Built with ❤️ using Next.js and TypeScript
