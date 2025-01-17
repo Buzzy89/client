@@ -21,9 +21,31 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login(credentials.username, credentials.password);
-    } catch (error: any) {
-      setError(error.response?.data?.message || 'Login failed. Please check your credentials.');
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(credentials)
+      });
+      
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }
+      
+      const data = await response.json();
+      
+      // Store the token and user data using AuthContext
+      if (data.token && data.user) {
+        await login(credentials.username, credentials.password); // This will update the AuthContext
+        router.push('/'); // Redirect to home page after successful login
+      } else {
+        throw new Error('Invalid response format');
+      }
+    } catch (error) {
+      setError('Login failed. Please try again.');
+      console.error('Login error:', error);
     }
   };
 

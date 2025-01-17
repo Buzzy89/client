@@ -17,8 +17,22 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await register(formData.username, formData.email, formData.password);
-      router.push('/');
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(formData)
+      });
+      
+      if (!response.ok) {
+        throw new Error('Registration failed');
+      }
+      
+      const data = await response.json();
+      // Handle successful registration
+      router.push('/login');
     } catch (error) {
       setError('Registration failed. Please try again.');
       console.error('Register error:', error);
